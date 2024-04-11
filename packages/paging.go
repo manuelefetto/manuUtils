@@ -40,22 +40,44 @@ func GenerateTable(recordsG any, elemPerPage int) {
 		fields = append(fields, v.Name)
 	}
 
-	
-	fmt.Print(buildGraphicHeader(fields))
+	for {
+		fmt.Print(buildGraphicHeader(fields))
 
-	var tmpRecord []any
+		var tmpRecord []any
 
-	if currentPage == totalPages {
-		tmpRecord = records[currentPage*elemPerPage:]
-	} else {
-		tmpRecord = records[currentPage*elemPerPage : currentPage*elemPerPage+elemPerPage]
+		if currentPage == totalPages {
+			tmpRecord = records[currentPage*elemPerPage:]
+		} else {
+			tmpRecord = records[currentPage*elemPerPage : currentPage*elemPerPage+elemPerPage]
+		}
+
+		for _, v := range tmpRecord {
+			fmt.Print(buildGraphicRecord(v))
+		}
+
+		println(strconv.FormatInt(int64(currentPage), 32) + " / " + (strconv.FormatInt(int64(totalPages), 32)))
+
+		key := GetKeyboardKey()
+
+		deleteTable(len(tmpRecord))
+
+		if key == 13 {
+			break
+		}
+
+		if key == 65515 {
+			if currentPage != 0 {
+				currentPage--
+			}
+		}
+
+		if key == 65514 {
+			if currentPage != totalPages {
+				currentPage++
+			}
+		}
+
 	}
-
-	for _, v := range tmpRecord {
-		fmt.Print(buildGraphicRecord(v))
-	}
-
-	println(strconv.FormatInt(int64(currentPage), 32) + " / " + (strconv.FormatInt(int64(totalPages), 32)))
 
 }
 
@@ -148,7 +170,7 @@ func buildGraphicHeader(fields []string) string {
 }
 
 func deleteTable(elemToDel int) {
-	for i := 0; i < 3*(elemToDel+1); i++ {
+	for i := 0; i < 3*(elemToDel+1)+1; i++ {
 		ClearLine()
 	}
 }
