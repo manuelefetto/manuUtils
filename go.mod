@@ -1,4 +1,4 @@
-module github.com/manuelefetto/manuUtils
+module github.com/manuelefetto/ManuUtils
 
 go 1.21.6
 

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	Utils "github.com/manuelefetto/manuUtils/packages"
+	Utils "github.com/manuelefetto/ManuUtils/packages"
 	"time"
 )
 
